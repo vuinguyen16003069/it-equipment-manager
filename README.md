@@ -157,7 +157,7 @@ src/
 │   │   ├── login.ejs             # Login page
 │   │   └── register.ejs          # Register page
 │   ├── equipment/
-│   │   ├── all.ejs               # Equipment list
+│   │   ├── index.ejs             # Equipment list
 │   │   ├── create.ejs            # Create form
 │   │   └── edit.ejs              # Edit form
 │   ├── users/
