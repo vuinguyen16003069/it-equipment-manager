@@ -1,0 +1,27 @@
+<nav class="w-60 bg-gray-900 text-white flex flex-col shrink-0">
+    <div class="px-6 py-5 border-b border-gray-700">
+        <h2 class="text-base font-bold tracking-wide">💻 IT Manager</h2>
+        <p class="text-xs text-gray-400 mt-0.5">Quản lý thiết bị IT</p>
+    </div>
+
+    <ul class="flex-1 px-3 py-4 space-y-1">
+        <li>
+            <a href="/equipment"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors">
+                🖥️ Danh sách thiết bị
+            </a>
+        </li>
+        <% if (locals.user && locals.user.role === 'admin') { %>
+        <li>
+            <a href="/equipment/create"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors">
+                ➕ Thêm thiết bị
+            </a>
+        </li>
+        <% } %>
+    </ul>
+
+    <div class="px-6 py-4 border-t border-gray-700 text-xs text-gray-500">
+        v1.0.0 &copy; 2026
+    </div>
+</nav>
