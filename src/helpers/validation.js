@@ -13,6 +13,23 @@ const loginSchema = Joi.object({
   }),
 });
 
+const registerSchema = Joi.object({
+  username: Joi.string().alphanum().min(3).max(50).required().messages({
+    'string.alphanum': 'Tên đăng nhập chỉ chứa chữ và số',
+    'string.min': 'Tên đăng nhập tối thiểu 3 ký tự',
+    'string.max': 'Tên đăng nhập tối đa 50 ký tự',
+    'any.required': 'Vui lòng nhập tên đăng nhập',
+  }),
+  password: Joi.string().min(6).required().messages({
+    'string.min': 'Mật khẩu tối thiểu 6 ký tự',
+    'any.required': 'Vui lòng nhập mật khẩu',
+  }),
+  confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+    'any.only': 'Mật khẩu xác nhận không khớp',
+    'any.required': 'Vui lòng xác nhận mật khẩu',
+  }),
+});
+
 const equipmentSchema = Joi.object({
   name: Joi.string().min(2).max(100).required().messages({
     'any.required': 'Vui lòng nhập tên thiết bị',
@@ -41,4 +58,4 @@ const equipmentSchema = Joi.object({
   purchaseDate: Joi.date().allow(null, '').default(null),
 });
 
-module.exports = { loginSchema, equipmentSchema };
+module.exports = { loginSchema, registerSchema, equipmentSchema };

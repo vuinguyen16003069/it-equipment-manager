@@ -17,8 +17,24 @@ const loginLimiter = rateLimit({
   },
 });
 
+// Chặn brute-force đăng ký: tối đa 5 lần/1 giờ mỗi IP
+const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (_req, res) => {
+    res.status(429).render('auth/register', {
+      title: 'Đăng ký',
+      error: 'Quá nhiều lần đăng ký. Vui lòng thử lại sau 1 giờ.',
+    });
+  },
+});
+
 router.get('/login', authController.getLogin);
 router.post('/login', loginLimiter, authController.postLogin);
+router.get('/register', authController.getRegister);
+router.post('/register', registerLimiter, authController.postRegister);
 router.post('/logout', authController.logout);
 
 module.exports = router;
