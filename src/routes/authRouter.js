@@ -13,6 +13,7 @@ const loginLimiter = rateLimit({
     res.status(429).render('auth/login', {
       title: 'Đăng nhập',
       error: 'Quá nhiều lần thử. Vui lòng thử lại sau 15 phút.',
+      success: null,
     });
   },
 });
@@ -27,6 +28,7 @@ const registerLimiter = rateLimit({
     res.status(429).render('auth/register', {
       title: 'Đăng ký',
       error: 'Quá nhiều lần đăng ký. Vui lòng thử lại sau 1 giờ.',
+      success: null,
     });
   },
 });
@@ -36,5 +38,10 @@ router.post('/login', loginLimiter, authController.postLogin);
 router.get('/register', authController.getRegister);
 router.post('/register', registerLimiter, authController.postRegister);
 router.post('/logout', authController.logout);
+
+const { requireAuth } = require('../middleware/authMiddleware');
+router.get('/profile', requireAuth, authController.getProfile);
+router.post('/profile/change-password', requireAuth, authController.postChangePassword);
+router.get('/settings', requireAuth, authController.getSettings);
 
 module.exports = router;

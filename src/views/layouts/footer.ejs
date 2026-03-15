@@ -5,6 +5,71 @@
         </footer>
     </div>
 </div>
+
+<script>
+// ── Notification Bell ──────────────────────────────────────────────────────
+let notifLoaded = false;
+
+document.getElementById('notifBtn').addEventListener('click', function() {
+    const dropdown = document.getElementById('notifDropdown');
+    document.getElementById('userMenuDropdown').classList.add('hidden');
+    dropdown.classList.toggle('hidden');
+    if (!dropdown.classList.contains('hidden') && !notifLoaded) {
+        loadNotifications();
+    }
+});
+
+document.getElementById('userMenuBtn').addEventListener('click', function() {
+    const dropdown = document.getElementById('userMenuDropdown');
+    document.getElementById('notifDropdown').classList.add('hidden');
+    dropdown.classList.toggle('hidden');
+});
+
+function loadNotifications() {
+    fetch('/api/notifications')
+        .then(r => r.json())
+        .then(data => {
+            notifLoaded = true;
+            const list = document.getElementById('notifList');
+            const count = document.getElementById('notifCount');
+            const dot = document.getElementById('notifDot');
+            const items = data.notifications || [];
+            count.textContent = items.length + ' mục';
+            if (items.some(n => n.isNew)) dot.classList.remove('hidden');
+            if (items.length === 0) {
+                list.innerHTML = '<div class="px-4 py-6 text-center text-sm text-gray-400">Không có dữ liệu</div>';
+                return;
+            }
+            list.innerHTML = items.map(n => {
+                const d = new Date(n.time);
+                const timeStr = d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', {hour:'2-digit',minute:'2-digit'});
+                return `<a href="/equipment" class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition">
+                    <span class="mt-0.5 w-2 h-2 rounded-full shrink-0 ${n.isNew ? 'bg-blue-500' : 'bg-gray-300'}"></span>
+                    <div class="min-w-0">
+                        <p class="text-sm font-semibold text-gray-800 truncate">${n.title}</p>
+                        <p class="text-xs text-gray-500 truncate">${n.subtitle}</p>
+                        <p class="text-xs text-gray-400 mt-0.5">${timeStr}</p>
+                    </div>
+                </a>`;
+            }).join('');
+        })
+        .catch(() => {
+            document.getElementById('notifList').innerHTML = '<div class="px-4 py-6 text-center text-sm text-red-400">Không thể tải thông báo</div>';
+        });
+}
+
+// Close dropdowns on outside click
+document.addEventListener('click', function(e) {
+    const notifContainer = document.getElementById('notifContainer');
+    const userContainer = document.getElementById('userMenuContainer');
+    if (notifContainer && !notifContainer.contains(e.target)) {
+        document.getElementById('notifDropdown').classList.add('hidden');
+    }
+    if (userContainer && !userContainer.contains(e.target)) {
+        document.getElementById('userMenuDropdown').classList.add('hidden');
+    }
+});
+</script>
 <% } %>
 </body>
 </html>

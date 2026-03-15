@@ -25,14 +25,21 @@ async function index(req, res, next) {
       pagination: { total, page, totalPages, pageSize },
       EQUIPMENT_TYPES,
       EQUIPMENT_STATUSES,
+      request: req,
     });
   } catch (err) {
     next(err);
   }
 }
 
-function getCreate(_req, res) {
-  res.render('equipment/create', { title: 'Thêm thiết bị', error: null, EQUIPMENT_TYPES, EQUIPMENT_STATUSES });
+function getCreate(req, res) {
+  res.render('equipment/create', {
+    title: 'Thêm thiết bị',
+    error: null,
+    EQUIPMENT_TYPES,
+    EQUIPMENT_STATUSES,
+    request: req,
+  });
 }
 
 async function postCreate(req, res, _next) {
@@ -50,7 +57,13 @@ async function postCreate(req, res, _next) {
     res.redirect('/equipment?flash=created');
   } catch (err) {
     const msg = err.code === 11000 ? 'Số serial đã tồn tại trong hệ thống.' : err.message;
-    res.render('equipment/create', { title: 'Thêm thiết bị', error: msg, EQUIPMENT_TYPES, EQUIPMENT_STATUSES });
+    res.render('equipment/create', {
+      title: 'Thêm thiết bị',
+      error: msg,
+      EQUIPMENT_TYPES,
+      EQUIPMENT_STATUSES,
+      request: req,
+    });
   }
 }
 
@@ -63,7 +76,14 @@ async function getEdit(req, res, next) {
     if (!item) {
       return res.redirect('/equipment');
     }
-    res.render('equipment/edit', { title: 'Sửa thiết bị', item, error: null, EQUIPMENT_TYPES, EQUIPMENT_STATUSES });
+    res.render('equipment/edit', {
+      title: 'Sửa thiết bị',
+      item,
+      error: null,
+      EQUIPMENT_TYPES,
+      EQUIPMENT_STATUSES,
+      request: req,
+    });
   } catch (err) {
     next(err);
   }
@@ -82,6 +102,7 @@ async function postEdit(req, res, _next) {
       error: error.details[0].message,
       EQUIPMENT_TYPES,
       EQUIPMENT_STATUSES,
+      request: req,
     });
   }
   try {
@@ -90,7 +111,14 @@ async function postEdit(req, res, _next) {
   } catch (err) {
     const item = await equipmentService.getById(req.params.id);
     const msg = err.code === 11000 ? 'Số serial đã tồn tại trong hệ thống.' : err.message;
-    res.render('equipment/edit', { title: 'Sửa thiết bị', item, error: msg, EQUIPMENT_TYPES, EQUIPMENT_STATUSES });
+    res.render('equipment/edit', {
+      title: 'Sửa thiết bị',
+      item,
+      error: msg,
+      EQUIPMENT_TYPES,
+      EQUIPMENT_STATUSES,
+      request: req,
+    });
   }
 }
 

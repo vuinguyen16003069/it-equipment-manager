@@ -12,7 +12,7 @@ async function register(username, password) {
   const newUser = new User({
     username,
     password: hashedPassword,
-    role: 'viewer',
+    role: 'user',
   });
 
   await newUser.save();
@@ -36,4 +36,21 @@ async function login(username, password) {
   return token;
 }
 
-module.exports = { register, login };
+async function getUserById(id) {
+  return User.findById(id).select('-password');
+}
+
+async function changePassword(id, currentPassword, newPassword) {
+  const user = await User.findById(id);
+  if (!user) {
+    throw new Error('Người dùng không tồn tại.');
+  }
+  const isMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!isMatch) {
+    throw new Error('Mật khẩu hiện tại không đúng.');
+  }
+  user.password = await bcrypt.hash(newPassword, 10);
+  await user.save();
+}
+
+module.exports = { register, login, getUserById, changePassword };

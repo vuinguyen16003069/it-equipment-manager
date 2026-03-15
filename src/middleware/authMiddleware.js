@@ -34,6 +34,7 @@ function requireAdmin(req, res, next) {
     return res.status(403).render('error', {
       title: 'Từ chối truy cập',
       message: 'Bạn không có quyền thực hiện thao tác này.',
+      request: req,
     });
   }
   req.user = user;

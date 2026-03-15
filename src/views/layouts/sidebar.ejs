@@ -19,14 +19,8 @@
             </a>
         </li>
         <li class="pt-3 mt-3 border-t border-gray-700">
-            <a href="#"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors text-gray-200">
-                &#128193; Báo cáo
-            </a>
-        </li>
-        <li>
-            <a href="#"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors text-gray-200">
+            <a href="/users"
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors <%= request.path.startsWith('/users') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
                 &#128100; Quản lý người dùng
             </a>
         </li>

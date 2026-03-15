@@ -2,6 +2,7 @@ function notFound(req, res) {
   res.status(404).render('error', {
     title: '404 – Không tìm thấy',
     message: `Trang "${req.path}" không tồn tại.`,
+    request: req,
   });
 }
 
@@ -11,7 +12,7 @@ function globalError(err, req, res, next) {
   console.error(err.stack || err);
   const status = err.status || err.statusCode || 500;
   const message = process.env.NODE_ENV === 'production' ? 'Đã xảy ra lỗi máy chủ, vui lòng thử lại sau.' : err.message;
-  res.status(status).render('error', { title: 'Lỗi máy chủ', message });
+  res.status(status).render('error', { title: 'Lỗi máy chủ', message, request: req });
 }
 
 module.exports = { notFound, globalError };

@@ -1,0 +1,77 @@
+<%- include('./layouts/header') %>
+
+<div class="max-w-2xl space-y-6">
+    <!-- Account Settings -->
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+        <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">&#128100; Tài khoản</h3>
+        <div class="space-y-3">
+            <a href="/auth/profile"
+               class="flex items-center justify-between px-4 py-3.5 rounded-lg border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition group">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">&#128274;</span>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">Đổi mật khẩu</p>
+                        <p class="text-xs text-gray-500">Cập nhật mật khẩu đăng nhập của bạn</p>
+                    </div>
+                </div>
+                <span class="text-gray-400 group-hover:text-blue-500 transition">&#8250;</span>
+            </a>
+            <a href="/auth/profile"
+               class="flex items-center justify-between px-4 py-3.5 rounded-lg border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition group">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">&#128101;</span>
+                    <div>
+                        <p class="text-sm font-semibold text-gray-800">Hồ sơ cá nhân</p>
+                        <p class="text-xs text-gray-500">Xem thông tin tài khoản của bạn</p>
+                    </div>
+                </div>
+                <span class="text-gray-400 group-hover:text-blue-500 transition">&#8250;</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- System Info -->
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+        <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">&#128187; Thông tin hệ thống</h3>
+        <div class="space-y-3">
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-sm text-gray-500">Phiên bản ứng dụng</span>
+                <span class="text-sm font-semibold text-gray-800">v1.0.0</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-sm text-gray-500">Framework</span>
+                <span class="text-sm font-semibold text-gray-800">Express.js v5</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-sm text-gray-500">Database</span>
+                <span class="text-sm font-semibold text-gray-800">MongoDB + Mongoose</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                <span class="text-sm text-gray-500">Xác thực</span>
+                <span class="text-sm font-semibold text-gray-800">JWT + bcrypt</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+                <span class="text-sm text-gray-500">Giao diện</span>
+                <span class="text-sm font-semibold text-gray-800">Tailwind CSS v4</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="bg-white rounded-xl shadow-lg border border-red-200 p-8">
+        <div class="flex items-center justify-between px-4 py-3.5 rounded-lg bg-red-50 border border-red-200">
+            <div>
+                <p class="text-sm font-semibold text-red-800">Đăng xuất khỏi hệ thống</p>
+                <p class="text-xs text-red-600">Kết thúc phiên làm việc hiện tại</p>
+            </div>
+            <form action="/auth/logout" method="POST">
+                <button type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white font-bold text-sm px-4 py-2 rounded-lg transition shadow-sm">
+                    &#128682; Đăng xuất
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('./layouts/footer') %>

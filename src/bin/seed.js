@@ -124,13 +124,13 @@ async function seed() {
     }
   }
   if (added > 0) {
-    console.log(`✅ Đã thêm ${added} thiết bị mẫu`);
+    console.log(`Đã thêm ${added} thiết bị mẫu`);
   } else {
-    console.log('ℹ️  Dữ liệu thiết bị mẫu đã tồn tại');
+    console.log('Dữ liệu thiết bị mẫu đã tồn tại');
   }
 
   await mongoose.disconnect();
-  console.log('🔌 Đã đóng kết nối MongoDB');
+  console.log('Đã đóng kết nối MongoDB');
 }
 
 seed().catch(console.error);
