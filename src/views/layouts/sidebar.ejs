@@ -1,27 +1,39 @@
-<nav class="w-60 bg-gray-900 text-white flex flex-col shrink-0">
-    <div class="px-6 py-5 border-b border-gray-700">
-        <h2 class="text-base font-bold tracking-wide">💻 IT Manager</h2>
-        <p class="text-xs text-gray-400 mt-0.5">Quản lý thiết bị IT</p>
+<nav class="w-60 bg-gradient-to-b from-gray-900 to-gray-800 text-white flex flex-col shrink-0 shadow-lg">
+    <div class="px-6 py-6 border-b border-gray-700">
+        <h2 class="text-lg font-bold tracking-wide flex items-center gap-2">💻 IT Manager</h2>
+        <p class="text-xs text-gray-400 mt-1">v1.0.0</p>
     </div>
 
-    <ul class="flex-1 px-3 py-4 space-y-1">
+    <ul class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         <li>
             <a href="/equipment"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors">
-                🖥️ Danh sách thiết bị
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors <%= request.path === '/equipment' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
+                &#128421; Danh sách thiết bị
             </a>
         </li>
         <% if (locals.user && locals.user.role === 'admin') { %>
         <li>
             <a href="/equipment/create"
-               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors">
-                ➕ Thêm thiết bị
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors <%= request.path === '/equipment/create' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
+                &#10133; Thêm thiết bị
+            </a>
+        </li>
+        <li class="pt-3 mt-3 border-t border-gray-700">
+            <a href="#"
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors text-gray-200">
+                &#128193; Báo cáo
+            </a>
+        </li>
+        <li>
+            <a href="#"
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors text-gray-200">
+                &#128100; Quản lý người dùng
             </a>
         </li>
         <% } %>
     </ul>
 
     <div class="px-6 py-4 border-t border-gray-700 text-xs text-gray-500">
-        v1.0.0 &copy; 2026
+        <p>&copy; 2026 vuinguyen16003069</p>
     </div>
 </nav>

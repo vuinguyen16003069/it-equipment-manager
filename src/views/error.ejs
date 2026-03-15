@@ -1,12 +1,19 @@
 <%- include('./layouts/header') %>
 
-<div class="flex flex-col items-center justify-center py-20 text-center">
-    <div class="text-6xl mb-4">⛔</div>
-    <h2 class="text-2xl font-bold text-gray-800 mb-2"><%= title %></h2>
-    <p class="text-gray-500 mb-6"><%= message %></p>
-    <a href="/equipment" class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors">
-        ← Quay về trang chủ
-    </a>
+<div class="flex flex-col items-center justify-center py-20 px-4 min-h-[70vh]">
+    <div class="text-7xl mb-6 animate-bounce">&#9940;</div>
+    <div class="text-center max-w-md">
+        <h2 class="text-4xl font-bold text-gray-800 mb-3"><%= title %></h2>
+        <p class="text-gray-600 text-lg mb-8"><%= message %></p>
+        <div class="flex gap-4 justify-center flex-wrap">
+            <a href="/equipment" class="inline-block bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg transform hover:scale-105">
+                &#8592; Quay về Danh sách
+            </a>
+            <a href="#" onclick="history.back()" class="inline-block bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-6 py-3 rounded-lg transition-all">
+                &#10550; Quay lại
+            </a>
+        </div>
+    </div>
 </div>
 
 <%- include('./layouts/footer') %>

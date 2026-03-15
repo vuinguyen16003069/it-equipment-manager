@@ -7,27 +7,46 @@
     <title><%= title %> | IT Equipment Manager</title>
     <link rel="stylesheet" href="/stylesheets/output.css">
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-50 min-h-screen">
 
 <% if (locals.user) { %>
 <div class="flex min-h-screen">
     <%- include('./sidebar') %>
     <div class="flex-1 flex flex-col min-w-0">
-        <header class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-semibold text-gray-700"><%= title %></h1>
-            <div class="flex items-center gap-4">
-                <span class="text-sm text-gray-500 hidden sm:block">
-                    👤 <span class="font-medium text-gray-700"><%= locals.user.username %></span>
-                    <span class="ml-1 text-xs px-2 py-0.5 rounded-full <%= locals.user.role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600' %>">
-                        <%= locals.user.role %>
-                    </span>
-                </span>
-                <form action="/auth/logout" method="POST">
-                    <button class="text-sm text-red-500 hover:text-red-700 font-medium transition-colors">
-                        Đăng xuất
+        <header class="bg-white shadow-sm px-6 py-4 border-b border-gray-200 sticky top-0 z-40">
+            <div class="flex justify-between items-center">
+                <div class="flex-1">
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"><%= title %></h1>
+                    <p class="text-xs text-gray-500 mt-0.5">Quản lý thiết bị IT - Hệ thống tập trung</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <!-- Notification Bell -->
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition-colors relative" title="Thông báo">
+                        &#128276;
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
                     </button>
-                </form>
+                    
+                    <!-- User Dropdown Menu -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition-colors">
+                            <span class="text-sm font-medium text-gray-700"><%= locals.user.username %></span>
+                            <span class="text-xs px-2 py-0.5 rounded-full <%= locals.user.role === 'admin' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-600' %>">
+                                <%= locals.user.role %>
+                            </span>
+                            <span class="text-xs">&#9662;</span>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="absolute right-0 mt-2 w-44 bg-white rounded-lg shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 py-2 z-50">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition">&#128100; Hồ sơ cá nhân</a>
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition">&#9881; Cài đặt</a>
+                            <hr class="border-gray-200 my-1">
+                            <form action="/auth/logout" method="POST" class="block">
+                                <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition font-medium">&#128682; Đăng xuất</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
-        <main class="p-6 flex-1">
+        <main class="p-6 flex-1 overflow-y-auto">
 <% } %>
