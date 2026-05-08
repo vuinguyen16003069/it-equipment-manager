@@ -101,17 +101,35 @@ const sampleEquipment = [
   },
 ];
 
+const sampleUsers = [
+  { username: 'admin', password: 'admin123', role: 'admin' },
+  { username: 'user1', password: 'user123', role: 'user' },
+  { username: 'user2', password: 'user123', role: 'user' },
+  { username: 'user3', password: 'user123', role: 'user' },
+  { username: 'user4', password: 'user123', role: 'user' },
+  { username: 'user5', password: 'user123', role: 'user' },
+  { username: 'user6', password: 'user123', role: 'user' },
+  { username: 'user7', password: 'user123', role: 'user' },
+];
+
 async function seed() {
   await mongoose.connect(process.env.MONGO_URI);
 
-  // --- Admin user ---
-  const exists = await User.findOne({ username: 'admin' });
-  if (!exists) {
-    const hashed = await bcrypt.hash('admin123', 10);
-    await User.create({ username: 'admin', password: hashed, role: 'admin' });
-    console.log('✅ Đã tạo tài khoản admin  →  admin / admin123');
-  } else {
-    console.log('ℹ️  Tài khoản admin đã tồn tại');
+  // --- Users ---
+  let usersAdded = 0;
+  for (const u of sampleUsers) {
+    const exists = await User.findOne({ username: u.username });
+    if (!exists) {
+      const hashed = await bcrypt.hash(u.password, 10);
+      await User.create({ username: u.username, password: hashed, role: u.role });
+      console.log(`✅ Đã tạo tài khoản [${u.role}]  →  ${u.username} / ${u.password}`);
+      usersAdded++;
+    } else {
+      console.log(`ℹ️  Tài khoản "${u.username}" đã tồn tại`);
+    }
+  }
+  if (usersAdded === 0) {
+    console.log('ℹ️  Tất cả tài khoản mẫu đã tồn tại');
   }
 
   // --- Sample equipment ---

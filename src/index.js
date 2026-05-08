@@ -41,6 +41,9 @@ app.use(cookieParser());
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Suppress favicon 404
+app.get('/favicon.ico', (_req, res) => res.sendStatus(204));
+
 // View engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
