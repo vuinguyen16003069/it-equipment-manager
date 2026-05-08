@@ -65,6 +65,7 @@ Xây dựng bằng **Node.js / Express.js** theo kiến trúc **MVC + Services L
 | **Validation** | Joi | v18.0.2 |
 | **Styling** | Tailwind CSS | v4.2.1 |
 | **Security** | Helmet + express-rate-limit | v8.3.1 |
+| **Media** | Multer + ImgBB API | Latest |
 | **Dev Tools** | Nodemon, Morgan, Biome | Latest |
 
 ---
@@ -88,6 +89,7 @@ Xây dựng bằng **Node.js / Express.js** theo kiến trúc **MVC + Services L
 | 🗑️ **Delete** | Xóa thiết bị (admin only) |
 | 🔍 **Search** | Tìm kiếm theo tên, type, serial |
 | 🏷️ **Filter** | Lọc theo loại (Type) & trạng thái (Status) |
+| 🖼️ **Image Upload** | Upload ảnh lên ImgBB (API/Scraping), giới hạn 25MB làm ảnh sản phẩm |
 | 📄 **Pagination** | Server-side (10 item/trang) |
 
 ### 👨‍💼 Quản lý User (Admin)
@@ -130,7 +132,8 @@ src/
 │   └── userController.js         # Xử lý user (admin)
 ├── helpers/
 │   ├── constants.js              # Enum values (roles, status)
-│   └── validation.js             # Joi schemas
+│   ├── validation.js             # Joi schemas
+│   └── imgbb.js                  # Helper upload ảnh lên ImgBB
 ├── middleware/
 │   ├── authMiddleware.js         # JWT guard & role check
 │   └── errorHandler.js           # 404 & global error handler
@@ -173,7 +176,8 @@ src/
 │   └── images/                   # Image assets
 ├── input.css                     # Tailwind CSS source
 ├── index.js                      # App bootstrap
-└── .env                          # Environment variables
+├── .env                          # Environment variables
+└── biome.json                    # Biome configuration
 ```
 
 ---
@@ -200,8 +204,9 @@ cp .env.example .env
 
 # 4️⃣ Cấu hình .env
 # Chỉnh sửa các giá trị sau:
-# - MONGO_URI=mongodb://127.0.0.1:27017/it_equipment
-# - JWT_SECRET=your_secret_key_here
+# - MONGO_URI=mongodb+srv://<user>:<pass>@cluster.xxx.mongodb.net/it_equipment (Cloud Atlas)
+# - Hoặc MONGO_URI=mongodb://127.0.0.1:27017/it_equipment (Local)
+# - JWT_SECRET=chuỗi_bí_mật_tự_chọn
 # - PORT=3000
 # - NODE_ENV=development
 
@@ -224,6 +229,24 @@ Password: admin123
 ```
 
 ⚠️ **Nhớ đổi mật khẩu sau lần đầu đăng nhập!**
+
+---
+
+## ☁️ Hướng dẫn lấy link MongoDB Atlas (Cloud)
+
+Nếu bạn không muốn cài đặt MongoDB Local, hãy sử dụng **MongoDB Atlas** (Miễn phí):
+
+1. **Đăng ký:** Truy cập [mongodb.com/atlas](https://www.mongodb.com/cloud/atlas/register) và tạo tài khoản.
+2. **Tạo Cluster:** Chọn gói **M0 (FREE)** -> Chọn Region **Singapore** (để có tốc độ nhanh nhất).
+3. **Cấu hình Database Access:** 
+   - Tạo **Username** và **Password** (Lưu lại để dùng cho link kết nối).
+   - Phân quyền: `Atlas Admin` hoặc `Read and Write to any database`.
+4. **Cấu hình Network Access:** 
+   - Nhấn **Add IP Address** -> Chọn **Allow Access From Anywhere** (`0.0.0.0/0`).
+5. **Lấy link kết nối:** 
+   - Tại tab **Database** -> Nhấn **Connect** -> Chọn **Drivers**.
+   - Copy chuỗi kết nối có dạng: `mongodb+srv://<username>:<password>@cluster0.xxx.mongodb.net/it_equipment?...`
+6. **Cập nhật .env:** Thay link vừa copy vào biến `MONGO_URI` trong file `.env`.
 
 ---
 
@@ -251,13 +274,24 @@ Tạo file `.env` từ `.env.example` và cấu hình:
 | `NODE_ENV` | Môi trường | `development` / `production` | ✅ |
 | `MONGO_URI` | MongoDB connection | `mongodb://127.0.0.1:27017/it_equipment` | ✅ |
 | `JWT_SECRET` | JWT secret key (≥64 bytes) | *(hex string)* | ✅ |
+| `IMGBB_API_KEY` | API Key cho ImgBB | `ce5a95195ebc...` | ❌ (Có fallback) |
 
 **Ví dụ `.env`:**
 ```env
+# Cổng ứng dụng sẽ chạy
 PORT=3000
+
+# Chế độ môi trường của ứng dụng
 NODE_ENV=development
-MONGO_URI=mongodb://127.0.0.1:27017/it_equipment
-JWT_SECRET=your_super_secret_jwt_key_min_64_bytes_long_here
+
+# URI kết nối tới MongoDB (Thay bằng link Atlas của bạn)
+MONGO_URI=mongodb+srv://admin:password123@cluster0.xxxxx.mongodb.net/it_equipment?retryWrites=true&w=majority
+
+# Mã bí mật dùng cho JWT (Nên dùng chuỗi dài và ngẫu nhiên)
+JWT_SECRET=dfcf19cfc0545b5af38dc0efe0a259e541d75f789c9dfdd8f2d35feb81b153b7a61e7fb7ab96cc651bcd2e3b5102e42434259d8ad5804c7d4eba2163fdd845bd
+
+# API Key cho ImgBB (Sử dụng cho upload ảnh)
+IMGBB_API_KEY=ce5a95195ebc1c1d27af4d32d749cf7e
 ```
 
 ---
@@ -334,13 +368,11 @@ docker run -p 3000:3000 --env-file .env equipment-manager
 ## 🐛 Khắc phục sự cố
 
 ### ❌ Lỗi "Cannot connect to MongoDB"
-```bash
-# Kiểm tra MongoDB running
-mongod --version
-
-# Kiểm tra MONGO_URI trong .env
-# Format: mongodb://localhost:27017/database_name
-```
+- **Với Local:** Kiểm tra MongoDB service đã chạy chưa (`mongod --version`).
+- **Với Atlas:** 
+    - Kiểm tra IP Whitelist trên Atlas (đã thêm `0.0.0.0/0` chưa?).
+    - Kiểm tra Username/Password trong link kết nối.
+    - Đảm bảo ký tự đặc biệt trong password được encode (nếu có).
 
 ### ❌ Lỗi "JWT Secret undefined"
 ```bash

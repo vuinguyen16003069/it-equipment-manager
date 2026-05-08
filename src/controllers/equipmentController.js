@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const { equipmentSchema } = require('../helpers/validation');
 const { EQUIPMENT_TYPES, EQUIPMENT_STATUSES } = require('../helpers/constants');
 const equipmentService = require('../services/equipmentService');
+const multer = require('multer');
+const imgbb = require('../helpers/imgbb');
+
+// Cấu hình multer lưu vào bộ nhớ tạm để upload lên ImgBB
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 25 * 1024 * 1024 }, // Giới hạn 25MB
+});
 
 const FLASH_MESSAGES = {
   created: 'Đã thêm thiết bị thành công.',
@@ -50,9 +58,16 @@ async function postCreate(req, res, _next) {
       error: error.details[0].message,
       EQUIPMENT_TYPES,
       EQUIPMENT_STATUSES,
+      request: req,
     });
   }
   try {
+    // Xử lý upload ảnh nếu có
+    if (req.file) {
+      const imageUrl = await imgbb.upload(req.file.buffer, req.file.originalname);
+      value.imageUrl = imageUrl;
+    }
+
     await equipmentService.create(value);
     res.redirect('/equipment?flash=created');
   } catch (err) {
@@ -106,6 +121,12 @@ async function postEdit(req, res, _next) {
     });
   }
   try {
+    // Xử lý upload ảnh nếu có
+    if (req.file) {
+      const imageUrl = await imgbb.upload(req.file.buffer, req.file.originalname);
+      value.imageUrl = imageUrl;
+    }
+
     await equipmentService.update(req.params.id, value);
     res.redirect('/equipment?flash=updated');
   } catch (err) {
@@ -134,4 +155,4 @@ async function deleteEquipment(req, res, next) {
   }
 }
 
-module.exports = { index, getCreate, postCreate, getEdit, postEdit, deleteEquipment };
+module.exports = { index, getCreate, postCreate, getEdit, postEdit, deleteEquipment, upload };

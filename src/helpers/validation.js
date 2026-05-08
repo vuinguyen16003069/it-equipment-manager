@@ -56,6 +56,7 @@ const equipmentSchema = Joi.object({
   assignedTo: Joi.string().allow('').max(100).default(''),
   description: Joi.string().allow('').max(500).default(''),
   purchaseDate: Joi.date().allow(null, '').default(null),
+  imageUrl: Joi.string().allow('').default(''),
 });
 
 module.exports = { loginSchema, registerSchema, equipmentSchema };

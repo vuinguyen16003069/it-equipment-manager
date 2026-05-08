@@ -10,6 +10,7 @@ const equipmentSchema = new mongoose.Schema(
     assignedTo: { type: String, trim: true, default: '' },
     description: { type: String, trim: true, default: '' },
     purchaseDate: { type: Date, default: null },
+    imageUrl: { type: String, default: '' },
   },
   { timestamps: true },
 );

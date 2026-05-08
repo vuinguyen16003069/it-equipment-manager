@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Ứng dụng quản lý danh sách thiết bị IT nội bộ",
   "license": "MIT",
-  "author": "vuinguyen16003069 (G3K)",
+  "author": "vuinguyen16003069 (Vuiz)",
   "type": "commonjs",
   "main": "index.js",
   "engines": {
@@ -23,20 +23,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/vuinguyen16003069/DemoC.git"
+    "url": "git+https://github.com/vuinguyen16003069/it-equipment-manager.git"
   },
   "dependencies": {
+    "axios": "^1.16.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.3.1",
     "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.1",
+    "form-data": "^4.0.5",
     "helmet": "^8.1.0",
     "joi": "^18.0.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.0",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

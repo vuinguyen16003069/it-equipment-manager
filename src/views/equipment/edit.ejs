@@ -9,9 +9,27 @@
 
     <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
         <h2 class="text-2xl font-bold mb-6 text-gray-800">&#9999; Chỉnh sửa thiết bị</h2>
-        <form action="/equipment/edit/<%= item._id %>" method="POST" class="space-y-6" onchange="markUnsaved()">
+        <form action="/equipment/edit/<%= item._id %>" method="POST" enctype="multipart/form-data" class="space-y-6" onchange="markUnsaved()">
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Ảnh thiết bị</label>
+                    <div class="flex items-center gap-4">
+                        <div id="image-preview" class="w-24 h-24 bg-gray-100 rounded-lg border-2 border-gray-300 flex items-center justify-center overflow-hidden">
+                            <% if (item.imageUrl) { %>
+                                <img src="<%= item.imageUrl %>" class="w-full h-full object-cover">
+                            <% } else { %>
+                                <span class="text-gray-400 text-xs text-center px-1">Chưa có ảnh</span>
+                            <% } %>
+                        </div>
+                        <div class="flex-1">
+                            <input type="file" name="image" id="image-input" accept="image/*"
+                                class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 transition">
+                            <p class="text-xs text-gray-500 mt-1">Chọn ảnh mới để thay thế (Tối đa 25MB)</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="sm:col-span-2">
                     <label class="block text-sm font-bold text-gray-700 mb-2">Tên thiết bị <span class="text-red-500">*</span></label>
                     <input type="text" name="name" value="<%= item.name %>" required
@@ -92,6 +110,19 @@
     });
     document.querySelector('form').addEventListener('submit', () => {
         isSaved = true;
+    });
+
+    // Preview ảnh
+    document.getElementById('image-input').addEventListener('change', function(e) {
+        const preview = document.getElementById('image-preview');
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                preview.innerHTML = `<img src="${event.target.result}" class="w-full h-full object-cover">`;
+            }
+            reader.readAsDataURL(file);
+        }
     });
 </script>
 
