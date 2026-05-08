@@ -5,14 +5,16 @@
   "license": "MIT",
   "author": "vuinguyen16003069 (Vuiz)",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "src/bin/www.js",
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
   "keywords": ["it", "inventory", "management", "express", "nodejs", "ejs", "tailwindcss", "jwt"],
   "scripts": {
-    "start": "nodemon -w src -w .env src/bin/www.js",
+    "start": "node src/bin/www.js",
+    "dev": "nodemon -w src -w .env src/bin/www.js",
+    "build": "npm install && npm run tw:build",
     "tw:build": "npx @tailwindcss/cli -i ./src/input.css -o ./src/public/stylesheets/output.css",
     "tw:watch": "npx @tailwindcss/cli -i ./src/input.css -o ./src/public/stylesheets/output.css --watch",
     "seed": "node src/bin/seed.js",
