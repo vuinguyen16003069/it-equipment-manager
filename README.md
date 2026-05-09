@@ -8,7 +8,7 @@
 
 <br/><br/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=32&pause=1000&color=3b82f6&center=true&vCenter=true&width=900&lines=🖥️+IT+Equipment+Manager;Quản+lý+Thiết+Bị+IT+Chuyên+Nghiệp;MVC+%2B+Services+Layer+Architecture;Bảo+Mật+%26+Hiệu+Suất+Cao" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=32&pause=1000&color=3b82f6&center=true&vCenter=true&width=900&lines=%F0%9F%92%BB+IT+Equipment+Manager;Qu%E1%BA%A3n+l%C3%BD+Thi%E1%BF%BFt+B%E1%BB%8B+IT+Chuy%C3%AAn+Nghi%E1%BB%87p;MVC+%2B+Services+Layer+Architecture;B%E1%BA%A3o+M%E1%BA%ADt+%26+Hi%E1%BB%87u+Su%E1%BA%A5t+Cao" alt="Typing SVG" />
 
 <br/>
 
