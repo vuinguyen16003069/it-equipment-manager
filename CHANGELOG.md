@@ -15,6 +15,7 @@ Tất cả các thay đổi đáng kể đối với dự án này sẽ được
 ### Fixed
 - Cấu hình lại điểm đầu vào ứng dụng (`main entry point`) và tối ưu hóa các scripts `start`, `dev`, `build`.
 - Cải thiện hệ thống Rate Limiting để bảo vệ các tuyến đường xác thực.
+- **Quản lý thiết bị**: Vá lỗi bảo mật nghiêm trọng (BOLA), ràng buộc quyền sở hữu thiết bị cho từng người dùng.
 
 ---
 
