@@ -10,7 +10,16 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
-  "keywords": ["it", "inventory", "management", "express", "nodejs", "ejs", "tailwindcss", "jwt"],
+  "keywords": [
+    "it",
+    "inventory",
+    "management",
+    "express",
+    "nodejs",
+    "ejs",
+    "tailwindcss",
+    "jwt"
+  ],
   "scripts": {
     "start": "node src/bin/www.js",
     "dev": "nodemon -w src -w .env src/bin/www.js",
@@ -30,6 +39,7 @@
   "dependencies": {
     "axios": "^1.16.0",
     "bcrypt": "^6.0.0",
+    "cfonts": "^3.3.1",
     "cookie-parser": "^1.4.7",
     "dotenv": "^17.3.1",
     "ejs": "^4.0.1",

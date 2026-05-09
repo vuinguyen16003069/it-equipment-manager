@@ -11,11 +11,15 @@ Tất cả các thay đổi đáng kể đối với dự án này sẽ được
 - **Xác thực OTP qua Email**: Triển khai hệ thống gửi mã OTP qua Gmail khi đăng ký tài khoản và khôi phục mật khẩu.
 - **Bảo mật & Phân quyền dữ liệu**: Vá lỗi bảo mật nghiêm trọng (BOLA), ràng buộc quyền sở hữu thiết bị cho từng người dùng.
 - **Seeding Data**: Script tự động tạo dữ liệu mẫu và tài khoản admin ban đầu.
+- **Nâng cao trải nghiệm tương tác (UX)**: Bổ sung hiệu ứng bàn tay (`cursor-pointer`) và phản hồi hình ảnh (`active:scale`) cho toàn bộ nút bấm, liên kết, dòng trong bảng và các thành phần tương tác trên mọi trang.
+- **Cải thiện Console**: Tích hợp `cfonts` để hiển thị Banner khởi động nghệ thuật và làm mới màu sắc thông báo trạng thái Server/Database.
 
 ### Fixed
 - Cấu hình lại điểm đầu vào ứng dụng (`main entry point`) và tối ưu hóa các scripts `start`, `dev`, `build`.
 - Cải thiện hệ thống Rate Limiting để bảo vệ các tuyến đường xác thực.
 - **Quản lý thiết bị**: Vá lỗi bảo mật nghiêm trọng (BOLA), ràng buộc quyền sở hữu thiết bị cho từng người dùng.
+- **README Resources**: Vá lỗi hiển thị hình ảnh động (Typing SVG) bằng cách mã hóa URL chuẩn xác.
+- **Lint Optimization**: Tối ưu hóa mã nguồn, loại bỏ các lỗi cảnh báo về `template literals` không cần thiết.
 
 ---
 

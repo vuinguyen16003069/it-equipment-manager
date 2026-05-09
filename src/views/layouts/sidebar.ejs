@@ -7,20 +7,20 @@
     <ul class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
         <li>
             <a href="/equipment"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors <%= request.path === '/equipment' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-all cursor-pointer active:scale-95 <%= request.path === '/equipment' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
                 &#128421; Danh sách thiết bị
             </a>
         </li>
         <% if (locals.user && locals.user.role === 'admin') { %>
         <li>
             <a href="/equipment/create"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors <%= request.path === '/equipment/create' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-all cursor-pointer active:scale-95 <%= request.path === '/equipment/create' ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
                 &#10133; Thêm thiết bị
             </a>
         </li>
         <li class="pt-3 mt-3 border-t border-gray-700">
             <a href="/users"
-               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-colors <%= request.path.startsWith('/users') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
+               class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-700 text-sm font-medium transition-all cursor-pointer active:scale-95 <%= request.path.startsWith('/users') ? 'bg-blue-600 text-white shadow-lg' : 'text-gray-200' %>">
                 &#128100; Quản lý người dùng
             </a>
         </li>

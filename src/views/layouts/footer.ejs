@@ -1,7 +1,7 @@
 <% if (locals.user) { %>
         </main>
         <footer class="bg-white border-t border-gray-200 px-6 py-4 text-xs text-gray-500 text-center mt-auto">
-            <p>&copy; 2026 IT Equipment Manager &nbsp; • &nbsp; Phát triển bởi <strong>vuinguyen16003069 (G3K)</strong> &nbsp; • &nbsp; <a href="https://github.com/vuinguyen16003069" class="text-blue-600 hover:text-blue-800">GitHub</a></p>
+            <p>&copy; 2026 IT Equipment Manager &nbsp; • &nbsp; Phát triển bởi <strong>vuinguyen16003069 (G3K)</strong> &nbsp; • &nbsp; <a href="https://github.com/vuinguyen16003069" class="text-blue-600 hover:text-blue-800 cursor-pointer">GitHub</a></p>
         </footer>
     </div>
 </div>
@@ -43,7 +43,7 @@ function loadNotifications() {
             list.innerHTML = items.map(n => {
                 const d = new Date(n.time);
                 const timeStr = d.toLocaleDateString('vi-VN') + ' ' + d.toLocaleTimeString('vi-VN', {hour:'2-digit',minute:'2-digit'});
-                return `<a href="/equipment" class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition">
+                return `<a href="/equipment" class="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-all cursor-pointer active:scale-[0.98]">
                     <span class="mt-0.5 w-2 h-2 rounded-full shrink-0 ${n.isNew ? 'bg-blue-500' : 'bg-gray-300'}"></span>
                     <div class="min-w-0">
                         <p class="text-sm font-semibold text-gray-800 truncate">${n.title}</p>

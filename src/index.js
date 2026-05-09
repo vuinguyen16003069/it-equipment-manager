@@ -27,7 +27,7 @@ app.use(
 // Database connection – exit if unreachable
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
+  .then(() => console.log('\x1b[32m%s\x1b[0m', '✅ MongoDB connected successfully!'))
   .catch((err) => {
     console.error('MongoDB connection error:', err.message);
     process.exit(1);

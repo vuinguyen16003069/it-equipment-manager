@@ -34,14 +34,14 @@
             placeholder="Tìm theo tên, serial, người dùng..."
             class="flex-1 min-w-48 border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition bg-gray-50 hover:bg-white">
 
-        <select name="type" class="border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-gray-50 hover:bg-white">
+        <select name="type" class="border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-gray-50 hover:bg-white cursor-pointer">
             <option value="">-- Loại thiết bị --</option>
             <% EQUIPMENT_TYPES.forEach(function(t) { %>
             <option value="<%= t %>" <%= query.type === t ? 'selected' : '' %>><%= t %></option>
             <% }); %>
         </select>
 
-        <select name="status" class="border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-gray-50 hover:bg-white">
+        <select name="status" class="border border-gray-300 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition bg-gray-50 hover:bg-white cursor-pointer">
             <option value="">-- Trạng thái --</option>
             <option value="available"   <%= query.status === 'available'   ? 'selected' : '' %>>Có sẵn</option>
             <option value="in-use"      <%= query.status === 'in-use'      ? 'selected' : '' %>>Đang sử dụng</option>
@@ -49,10 +49,10 @@
             <option value="retired"     <%= query.status === 'retired'     ? 'selected' : '' %>>Đã thanh lý</option>
         </select>
 
-        <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white font-bold text-sm px-5 py-2.5 rounded-lg transition-all shadow-md">
+        <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white font-bold text-sm px-5 py-2.5 rounded-lg transition-all shadow-md cursor-pointer active:scale-95">
             &#128270; Lọc
         </button>
-        <a href="/equipment" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-sm px-4 py-2.5 rounded-lg transition-all">
+        <a href="/equipment" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-sm px-4 py-2.5 rounded-lg transition-all cursor-pointer active:scale-95">
             &#10005; Xóa lọc
         </a>
     </form>
@@ -101,7 +101,7 @@
                     const rowNum = (pagination.page - 1) * pagination.pageSize + i + 1;
                     const dateStr = item.purchaseDate ? new Date(item.purchaseDate).toLocaleDateString('vi-VN') : '—';
                 %>
-                <tr class="hover:bg-blue-50 transition-colors group">
+                <tr class="hover:bg-blue-50 transition-colors group cursor-pointer">
                     <td class="px-4 py-3.5 text-gray-400 font-medium"><%= rowNum %></td>
                     <td class="px-4 py-3.5">
                         <div class="w-12 h-12 bg-gray-100 rounded-lg border border-gray-200 overflow-hidden flex items-center justify-center">

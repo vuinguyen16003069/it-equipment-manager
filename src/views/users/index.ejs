@@ -9,7 +9,7 @@
 <% if (flash && FLASH_MSG[flash]) { %>
 <div class="mb-5 bg-gradient-to-r from-green-50 to-emerald-50 border-l-4 border-green-500 text-green-700 font-medium px-4 py-3 rounded-lg flex items-center justify-between shadow-sm">
     <span class="flex items-center gap-2">&#10003; <%= FLASH_MSG[flash] %></span>
-    <button onclick="this.parentElement.remove()" class="text-green-400 hover:text-green-600 text-xl leading-none">&#10005;</button>
+    <button onclick="this.parentElement.remove()" class="text-green-400 hover:text-green-600 text-xl leading-none cursor-pointer transition-colors active:scale-110">&#10005;</button>
 </div>
 <% } %>
 
@@ -25,11 +25,11 @@
         <input type="text" name="search" value="<%= query.search || '' %>"
             placeholder="Tìm theo tên đăng nhập..."
             class="border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 hover:bg-white min-w-64">
-        <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white font-bold text-sm px-4 py-2 rounded-lg transition">
+        <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white font-bold text-sm px-4 py-2 rounded-lg transition-all shadow-md cursor-pointer active:scale-95">
             &#128270; Tìm
         </button>
         <% if (query.search) { %>
-        <a href="/users" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-sm px-4 py-2 rounded-lg transition">
+        <a href="/users" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold text-sm px-4 py-2 rounded-lg transition-all cursor-pointer active:scale-95">
             &#10005;
         </a>
         <% } %>
@@ -66,7 +66,7 @@
                     const rowNum = (pagination.page - 1) * pagination.pageSize + i + 1;
                     const dateStr = u.createdAt ? new Date(u.createdAt).toLocaleDateString('vi-VN') : '—';
                 %>
-                <tr class="hover:bg-blue-50 transition-colors group">
+                <tr class="hover:bg-blue-50 transition-colors group cursor-pointer">
                     <td class="px-4 py-3.5 text-gray-400 font-medium"><%= rowNum %></td>
                     <td class="px-4 py-3.5 font-semibold text-gray-800">
                         <%= u.username %>
@@ -84,16 +84,16 @@
                         <div class="flex items-center justify-center gap-1.5">
                             <% if (!isMe) { %>
                             <a href="/users/<%= u._id %>/edit"
-                               class="bg-amber-50 hover:bg-amber-500 text-amber-700 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm">
+                               class="bg-amber-50 hover:bg-amber-500 text-amber-700 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm cursor-pointer active:scale-90">
                                 &#9999; Chỉnh sửa
                             </a>
                             <form action="/users/<%= u._id %>/delete" method="POST"
                                   onsubmit="return confirm('Xóa người dùng: <%= u.username %>?')"
                                   class="inline">
-                                <button type="submit"
-                                    class="bg-red-50 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm">
-                                    &#128465; Xóa
-                                </button>
+                                 <button type="submit"
+                                     class="bg-red-50 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm cursor-pointer active:scale-90">
+                                     &#128465; Xóa
+                                 </button>
                             </form>
                             <% } else { %>
                             <span class="text-xs text-gray-400 italic">—</span>
@@ -117,16 +117,16 @@
         </p>
         <div class="flex gap-2">
             <% if (pagination.page > 1) { %>
-            <a href="?<%= new URLSearchParams({...query, page: pagination.page - 1}).toString() %>"
-               class="inline-flex items-center gap-1 px-4 py-2 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 text-gray-600 font-bold rounded-lg transition-all">
-                &#8592; Trước
-            </a>
+             <a href="?<%= new URLSearchParams({...query, page: pagination.page - 1}).toString() %>"
+                class="inline-flex items-center gap-1 px-4 py-2 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 text-gray-600 font-bold rounded-lg transition-all cursor-pointer active:scale-95">
+                 &#8592; Trước
+             </a>
             <% } %>
             <% if (pagination.page < pagination.totalPages) { %>
-            <a href="?<%= new URLSearchParams({...query, page: pagination.page + 1}).toString() %>"
-               class="inline-flex items-center gap-1 px-4 py-2 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 text-gray-600 font-bold rounded-lg transition-all">
-                Sau &#8594;
-            </a>
+             <a href="?<%= new URLSearchParams({...query, page: pagination.page + 1}).toString() %>"
+                class="inline-flex items-center gap-1 px-4 py-2 border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 text-gray-600 font-bold rounded-lg transition-all cursor-pointer active:scale-95">
+                 Sau &#8594;
+             </a>
             <% } %>
         </div>
     </div>

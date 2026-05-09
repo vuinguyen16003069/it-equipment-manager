@@ -39,7 +39,7 @@
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Loại thiết bị <span class="text-red-500">*</span></label>
-                    <select name="type" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition bg-gray-50 hover:bg-white">
+                    <select name="type" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition bg-gray-50 hover:bg-white cursor-pointer">
                         <% EQUIPMENT_TYPES.forEach(function(t) { %>
                         <option value="<%= t %>" <%= item.type === t ? 'selected' : '' %>><%= t %></option>
                         <% }); %>
@@ -54,7 +54,7 @@
 
                 <div>
                     <label class="block text-sm font-bold text-gray-700 mb-2">Trạng thái <span class="text-red-500">*</span></label>
-                    <select name="status" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition bg-gray-50 hover:bg-white">
+                    <select name="status" required class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition bg-gray-50 hover:bg-white cursor-pointer">
                         <option value="available"   <%= item.status === 'available'   ? 'selected' : '' %>>Có sẵn</option>
                         <option value="in-use"      <%= item.status === 'in-use'      ? 'selected' : '' %>>Đang sử dụng</option>
                         <option value="maintenance" <%= item.status === 'maintenance' ? 'selected' : '' %>>Bảo trì</option>
@@ -86,11 +86,11 @@
 
             <div class="flex gap-3 pt-4 border-t border-gray-200">
                 <button type="submit"
-                    class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg transform hover:scale-105">
+                    class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-700 hover:to-amber-800 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg transform hover:scale-105 active:scale-95 cursor-pointer">
                     &#128190; Lưu thay đổi
                 </button>
                 <a href="/equipment"
-                   class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-6 py-3 rounded-lg transition-all">
+                   class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-6 py-3 rounded-lg transition-all cursor-pointer active:scale-95">
                     &#10005; Hủy
                 </a>
             </div>
