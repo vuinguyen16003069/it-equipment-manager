@@ -209,6 +209,9 @@ cp .env.example .env
 # - JWT_SECRET=chuỗi_bí_mật_tự_chọn
 # - PORT=3000
 # - NODE_ENV=development
+# - IMGBB_API_KEY=mã_api_imgbb
+# - GMAIL_USER=email_cua_ban@gmail.com
+# - GMAIL_PASS=mat_khau_ung_dung_gmail
 
 # 5️⃣ Build Tailwind CSS
 npm run tw:build

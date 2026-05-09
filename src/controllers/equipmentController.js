@@ -23,7 +23,7 @@ function isValidId(id) {
 
 async function index(req, res, next) {
   try {
-    const { items, total, page, totalPages, pageSize } = await equipmentService.getAll(req.query);
+    const { items, total, page, totalPages, pageSize } = await equipmentService.getAll(req.user.id, req.user.role, req.query);
     const flash = FLASH_MESSAGES[req.query.flash] || null;
     res.render('equipment/index', {
       title: 'Danh sách thiết bị',
@@ -68,7 +68,7 @@ async function postCreate(req, res, _next) {
       value.imageUrl = imageUrl;
     }
 
-    await equipmentService.create(value);
+    await equipmentService.create(value, req.user.id);
     res.redirect('/equipment?flash=created');
   } catch (err) {
     const msg = err.code === 11000 ? 'Số serial đã tồn tại trong hệ thống.' : err.message;
@@ -87,7 +87,7 @@ async function getEdit(req, res, next) {
     return res.redirect('/equipment');
   }
   try {
-    const item = await equipmentService.getById(req.params.id);
+    const item = await equipmentService.getById(req.params.id, req.user.id, req.user.role);
     if (!item) {
       return res.redirect('/equipment');
     }
@@ -110,7 +110,7 @@ async function postEdit(req, res, _next) {
   }
   const { error, value } = equipmentSchema.validate(req.body);
   if (error) {
-    const item = await equipmentService.getById(req.params.id);
+    const item = await equipmentService.getById(req.params.id, req.user.id, req.user.role);
     return res.render('equipment/edit', {
       title: 'Sửa thiết bị',
       item,
@@ -127,10 +127,10 @@ async function postEdit(req, res, _next) {
       value.imageUrl = imageUrl;
     }
 
-    await equipmentService.update(req.params.id, value);
+    await equipmentService.update(req.params.id, value, req.user.id, req.user.role);
     res.redirect('/equipment?flash=updated');
   } catch (err) {
-    const item = await equipmentService.getById(req.params.id);
+    const item = await equipmentService.getById(req.params.id, req.user.id, req.user.role);
     const msg = err.code === 11000 ? 'Số serial đã tồn tại trong hệ thống.' : err.message;
     res.render('equipment/edit', {
       title: 'Sửa thiết bị',
@@ -148,7 +148,7 @@ async function deleteEquipment(req, res, next) {
     return res.redirect('/equipment');
   }
   try {
-    await equipmentService.remove(req.params.id);
+    await equipmentService.remove(req.params.id, req.user.id, req.user.role);
     res.redirect('/equipment?flash=deleted');
   } catch (err) {
     next(err);

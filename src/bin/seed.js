@@ -113,34 +113,44 @@ const sampleEquipment = [
 ];
 
 const sampleUsers = [
-  { username: 'admin', password: 'admin123', role: 'admin' },
-  { username: 'user1', password: 'user123', role: 'user' },
-  { username: 'user2', password: 'user123', role: 'user' },
-  { username: 'user3', password: 'user123', role: 'user' },
-  { username: 'user4', password: 'user123', role: 'user' },
-  { username: 'user5', password: 'user123', role: 'user' },
-  { username: 'user6', password: 'user123', role: 'user' },
-  { username: 'user7', password: 'user123', role: 'user' },
-  { username: 'user8', password: 'user123', role: 'user' },
+  { username: 'admin', email: 'admin@gmail.com', password: 'admin123', role: 'admin' },
+  { username: 'user1', email: 'user1@gmail.com', password: 'user123', role: 'user' },
+  { username: 'user2', email: 'user2@gmail.com', password: 'user123', role: 'user' },
+  { username: 'user3', email: 'user3@gmail.com', password: 'user123', role: 'user' },
+  { username: 'user4', email: 'user4@gmail.com', password: 'user123', role: 'user' },
+  { username: 'user5', email: 'user5@gmail.com', password: 'user123', role: 'user' },
+  { username: 'user6', email: 'user6@gmail.com', password: 'user123', role: 'user' },
+  { username: 'user7', email: 'user7@gmail.com', password: 'user123', role: 'user' },
+  { username: 'user8', email: 'user8@gmail.com', password: 'user123', role: 'user' },
 ];
 
 async function seed() {
   await mongoose.connect(process.env.MONGO_URI);
 
   // --- Users ---
+  let adminId = null;
   for (const u of sampleUsers) {
-    const exists = await User.findOne({ username: u.username });
-    if (!exists) {
+    let user = await User.findOne({ username: u.username });
+    if (!user) {
       const hashed = await bcrypt.hash(u.password, 10);
-      await User.create({ username: u.username, password: hashed, role: u.role });
+      user = await User.create({ 
+        username: u.username, 
+        email: u.email,
+        password: hashed, 
+        role: u.role,
+        isVerified: true 
+      });
       console.log(`✅ Đã tạo tài khoản [${u.role}]  →  ${u.username} / ${u.password}`);
+    }
+    if (u.role === 'admin') {
+      adminId = user._id;
     }
   }
 
   // --- Sample equipment ---
   let added = 0;
   console.log('📦 Đang nạp dữ liệu thiết bị (và upload ảnh lên ImgBB)...');
-  
+
   for (const item of sampleEquipment) {
     const dup = await Equipment.findOne({ serialNumber: item.serialNumber });
     if (!dup) {
@@ -148,17 +158,17 @@ async function seed() {
         // Tự động upload ảnh lên ImgBB trước khi lưu vào DB
         console.log(`- Đang xử lý: ${item.name}...`);
         const imageUrl = await upload(item.sourceUrl, `${item.type.toLowerCase()}.jpg`);
-        
+
         // Dùng destructuring thay vì delete để tối ưu hiệu năng
-        const { sourceUrl, ...equipmentData } = { ...item, imageUrl };
-        
+        const { sourceUrl, ...equipmentData } = { ...item, imageUrl, owner: adminId };
+
         await Equipment.create(equipmentData);
         added++;
         console.log(`  ✅ Thành công: ${imageUrl}`);
       } catch (err) {
         console.error(`  ❌ Lỗi upload ảnh cho ${item.name}:`, err.message);
         // Fallback: Vẫn tạo thiết bị nhưng dùng link gốc
-        const { sourceUrl, ...equipmentData } = { ...item, imageUrl: item.sourceUrl };
+        const { sourceUrl, ...equipmentData } = { ...item, imageUrl: item.sourceUrl, owner: adminId };
         await Equipment.create(equipmentData);
         added++;
       }

@@ -1,4 +1,10 @@
-const { loginSchema, registerSchema } = require('../helpers/validation');
+const {
+  loginSchema,
+  registerSchema,
+  verifyOtpSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+} = require('../helpers/validation');
 const authService = require('../services/authService');
 
 function getLogin(req, res) {
@@ -40,14 +46,103 @@ async function postRegister(req, res) {
   }
 
   try {
-    await authService.register(value.username, value.password);
-    res.render('auth/login', {
-      title: 'Đăng nhập',
+    await authService.register(value.username, value.email, value.password);
+    res.render('auth/verify-otp', {
+      title: 'Xác thực mã OTP',
+      email: value.email,
       error: null,
-      success: `Đăng ký thành công! Vui lòng đăng nhập với tên: ${value.username}`,
+      success: `Mã OTP đã được gửi đến ${value.email}. Vui lòng kiểm tra email của bạn.`,
     });
   } catch (err) {
     res.render('auth/register', { title: 'Đăng ký', error: err.message, success: null });
+  }
+}
+
+function getVerifyOtp(req, res) {
+  const { email } = req.query;
+  res.render('auth/verify-otp', { title: 'Xác thực mã OTP', email: email || '', error: null, success: null });
+}
+
+async function postVerifyOtp(req, res) {
+  const { error, value } = verifyOtpSchema.validate(req.body);
+  if (error) {
+    return res.render('auth/verify-otp', {
+      title: 'Xác thực mã OTP',
+      email: req.body.email,
+      error: error.details[0].message,
+      success: null,
+    });
+  }
+
+  try {
+    await authService.verifyOtp(value.email, value.otp);
+    res.render('auth/login', {
+      title: 'Đăng nhập',
+      error: null,
+      success: 'Xác thực tài khoản thành công! Bây giờ bạn có thể đăng nhập.',
+    });
+  } catch (err) {
+    res.render('auth/verify-otp', { title: 'Xác thực mã OTP', email: value.email, error: err.message, success: null });
+  }
+}
+
+function getForgotPassword(_req, res) {
+  res.render('auth/forgot-password', { title: 'Quên mật khẩu', error: null, success: null });
+}
+
+async function postForgotPassword(req, res) {
+  const { error, value } = forgotPasswordSchema.validate(req.body);
+  if (error) {
+    return res.render('auth/forgot-password', {
+      title: 'Quên mật khẩu',
+      error: error.details[0].message,
+      success: null,
+    });
+  }
+
+  try {
+    await authService.forgotPassword(value.email);
+    res.render('auth/reset-password', {
+      title: 'Đặt lại mật khẩu',
+      email: value.email,
+      error: null,
+      success: `Mã OTP đặt lại mật khẩu đã được gửi đến ${value.email}.`,
+    });
+  } catch (err) {
+    res.render('auth/forgot-password', { title: 'Quên mật khẩu', error: err.message, success: null });
+  }
+}
+
+function getResetPassword(req, res) {
+  const { email } = req.query;
+  res.render('auth/reset-password', { title: 'Đặt lại mật khẩu', email: email || '', error: null, success: null });
+}
+
+async function postResetPassword(req, res) {
+  const { error, value } = resetPasswordSchema.validate(req.body);
+  if (error) {
+    return res.render('auth/reset-password', {
+      title: 'Đặt lại mật khẩu',
+      email: req.body.email,
+      error: error.details[0].message,
+      success: null,
+    });
+  }
+
+  try {
+    await authService.resetPassword(value.email, value.otp, value.password);
+    res.render('auth/login', {
+      title: 'Đăng nhập',
+      error: null,
+      success: 'Đặt lại mật khẩu thành công! Vui lòng đăng nhập với mật khẩu mới.',
+    });
+  } catch (err) {
+    res.render('auth/reset-password', {
+      title: 'Đặt lại mật khẩu',
+      email: value.email,
+      error: err.message,
+      success: null,
+    });
   }
 }
 
@@ -131,4 +226,10 @@ module.exports = {
   getProfile,
   postChangePassword,
   getSettings,
+  getVerifyOtp,
+  postVerifyOtp,
+  getForgotPassword,
+  postForgotPassword,
+  getResetPassword,
+  postResetPassword,
 };

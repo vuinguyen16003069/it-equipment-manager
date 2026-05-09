@@ -7,9 +7,14 @@ function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-async function getAll(query = {}) {
+async function getAll(userId, userRole, query = {}) {
   const { search, type, status, page = 1 } = query;
   const filter = {};
+
+  // Ràng buộc quyền: Chỉ Admin mới được xem tất cả, User chỉ xem của mình
+  if (userRole !== 'admin') {
+    filter.owner = userId;
+  }
 
   if (search?.trim()) {
     filter.name = { $regex: escapeRegex(search.trim()), $options: 'i' };
@@ -38,20 +43,51 @@ async function getAll(query = {}) {
   };
 }
 
-async function getById(id) {
-  return Equipment.findById(id).lean();
+async function getById(id, userId, userRole) {
+  const item = await Equipment.findById(id).lean();
+  if (!item) {
+    return null;
+  }
+
+  // Kiểm tra quyền sở hữu
+  if (userRole !== 'admin' && item.owner.toString() !== userId.toString()) {
+    throw new Error('Bạn không có quyền truy cập thiết bị này.');
+  }
+
+  return item;
 }
 
-async function create(data) {
-  return Equipment.create(data);
+async function create(data, userId) {
+  return Equipment.create({ ...data, owner: userId });
 }
 
-async function update(id, data) {
-  return Equipment.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+async function update(id, data, userId, userRole) {
+  const item = await Equipment.findById(id);
+  if (!item) {
+    throw new Error('Thiết bị không tồn tại.');
+  }
+
+  // Kiểm tra quyền sở hữu trước khi cập nhật
+  if (userRole !== 'admin' && item.owner.toString() !== userId.toString()) {
+    throw new Error('Bạn không có quyền thay đổi thiết bị này.');
+  }
+
+  Object.assign(item, data);
+  return item.save();
 }
 
-async function remove(id) {
-  return Equipment.findByIdAndDelete(id);
+async function remove(id, userId, userRole) {
+  const item = await Equipment.findById(id);
+  if (!item) {
+    throw new Error('Thiết bị không tồn tại.');
+  }
+
+  // Kiểm tra quyền sở hữu trước khi xóa
+  if (userRole !== 'admin' && item.owner.toString() !== userId.toString()) {
+    throw new Error('Bạn không có quyền xóa thiết bị này.');
+  }
+
+  return item.deleteOne();
 }
 
 module.exports = { getAll, getById, create, update, remove };

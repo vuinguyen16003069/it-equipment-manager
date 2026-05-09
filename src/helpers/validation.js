@@ -20,6 +20,10 @@ const registerSchema = Joi.object({
     'string.max': 'Tên đăng nhập tối đa 50 ký tự',
     'any.required': 'Vui lòng nhập tên đăng nhập',
   }),
+  email: Joi.string().email().required().messages({
+    'string.email': 'Email không hợp lệ',
+    'any.required': 'Vui lòng nhập email',
+  }),
   password: Joi.string().min(6).required().messages({
     'string.min': 'Mật khẩu tối thiểu 6 ký tự',
     'any.required': 'Vui lòng nhập mật khẩu',
@@ -27,6 +31,43 @@ const registerSchema = Joi.object({
   confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
     'any.only': 'Mật khẩu xác nhận không khớp',
     'any.required': 'Vui lòng xác nhận mật khẩu',
+  }),
+});
+
+const forgotPasswordSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    'string.email': 'Email không hợp lệ',
+    'any.required': 'Vui lòng nhập email',
+  }),
+});
+
+const resetPasswordSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    'string.email': 'Email không hợp lệ',
+    'any.required': 'Vui lòng nhập email',
+  }),
+  otp: Joi.string().length(6).required().messages({
+    'string.length': 'Mã OTP phải có 6 chữ số',
+    'any.required': 'Vui lòng nhập mã OTP',
+  }),
+  password: Joi.string().min(6).required().messages({
+    'string.min': 'Mật khẩu tối thiểu 6 ký tự',
+    'any.required': 'Vui lòng nhập mật khẩu',
+  }),
+  confirmPassword: Joi.string().valid(Joi.ref('password')).required().messages({
+    'any.only': 'Mật khẩu xác nhận không khớp',
+    'any.required': 'Vui lòng xác nhận mật khẩu',
+  }),
+});
+
+const verifyOtpSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    'string.email': 'Email không hợp lệ',
+    'any.required': 'Vui lòng nhập email',
+  }),
+  otp: Joi.string().length(6).required().messages({
+    'string.length': 'Mã OTP phải có 6 chữ số',
+    'any.required': 'Vui lòng nhập mã OTP',
   }),
 });
 
@@ -59,4 +100,11 @@ const equipmentSchema = Joi.object({
   imageUrl: Joi.string().allow('').default(''),
 });
 
-module.exports = { loginSchema, registerSchema, equipmentSchema };
+module.exports = {
+  loginSchema,
+  registerSchema,
+  equipmentSchema,
+  forgotPasswordSchema,
+  resetPasswordSchema,
+  verifyOtpSchema,
+};

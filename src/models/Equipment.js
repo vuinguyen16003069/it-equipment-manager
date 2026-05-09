@@ -11,6 +11,7 @@ const equipmentSchema = new mongoose.Schema(
     description: { type: String, trim: true, default: '' },
     purchaseDate: { type: Date, default: null },
     imageUrl: { type: String, default: '' },
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   },
   { timestamps: true },
 );
