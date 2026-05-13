@@ -79,6 +79,7 @@
 | **Styling** | ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38bdf8?style=flat-square&logo=tailwind-css&logoColor=white) | v4.2.1 |
 | **Security** | ![Helmet](https://img.shields.io/badge/Helmet-E34F26?style=flat-square) | v8.3.1 + rate-limit |
 | **Media** | ![ImgBB](https://img.shields.io/badge/ImgBB_API-2d8cf0?style=flat-square) | Multer + ImgBB |
+| **Container** | ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) | Compose v2+ |
 | **Dev Tools** | Nodemon · Morgan · Biome | Latest |
 
 </div>
@@ -231,9 +232,20 @@ src/
 
 ---
 
-## 📥 Cài đặt
+### 📦 Chạy bằng Docker (Khuyên dùng)
 
-### ⚡ Yêu cầu hệ thống
+Nếu bạn đã cài đặt **Docker** và **Docker Compose**, bạn có thể khởi chạy toàn bộ hệ thống (App + Database) chỉ với một lệnh:
+
+1. **Chuẩn bị file .env**: Đảm bảo các biến môi trường đã sẵn sàng (xem phần [Biến môi trường](#️-biến-môi-trường)).
+2. **Khởi chạy container**:
+   ```bash
+   docker-compose up -d --build
+   ```
+3. **Truy cập**: Ứng dụng sẽ chạy tại [http://localhost:3000](http://localhost:3000).
+
+---
+
+### 🛠️ Cài đặt thủ công (Local)
 
 | Công cụ | Phiên bản |
 |---|---|

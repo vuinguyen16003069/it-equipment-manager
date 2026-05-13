@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    container_name: it-manager-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGO_URI=mongodb://mongodb:27017/it_equipment
+      - JWT_SECRET=${JWT_SECRET:-dfcf19cfc0545b5af38dc0efe0a259e541d75f789c9dfdd8f2d35feb81b153b7a61e7fb7ab96cc651bcd2e3b5102e42434259d8ad5804c7d4eba2163fdd845bd}
+      - IMGBB_API_KEY=${IMGBB_API_KEY:-ce5a95195ebc1c1d27af4d32d749cf7e}
+      - GMAIL_USER=${GMAIL_USER}
+      - GMAIL_PASS=${GMAIL_PASS}
+    depends_on:
+      - mongodb
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    container_name: it-manager-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: always
+
+volumes:
+  mongodb_data:
