@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/output.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Outfit', sans-serif; margin: 0; padding: 0; }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #0f172a, #334155);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-900 antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-header border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-100">
+                    <i data-lucide="laptop-minimal" class="w-6 h-6"></i>
+                </div>
+                <span class="text-xl font-black tracking-tighter text-slate-900 uppercase">IT Manager</span>
+            </div>
+            
+            <nav class="hidden lg:flex items-center gap-8 ml-auto mr-8">
+                <a href="#features" class="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">Tính năng</a>
+                <a href="#about" class="text-sm font-bold text-slate-600 hover:text-blue-600 transition-colors">Về chúng tôi</a>
+                <div class="h-4 w-px bg-slate-200"></div>
+                <a href="/auth/login" class="text-sm font-bold text-slate-900 hover:text-blue-600 transition-colors">Đăng nhập</a>
+            </nav>
+
+            <div class="flex items-center gap-4 shrink-0">
+                <a href="/auth/register" class="hidden sm:block px-6 py-2.5 bg-slate-900 text-white rounded-full text-sm font-bold hover:bg-blue-600 transition-all active:scale-95 shadow-lg shadow-slate-200">
+                    Đăng ký ngay
+                </a>
+                <button class="lg:hidden p-2 text-slate-600">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="pt-40 pb-20 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 text-blue-700 rounded-full text-[10px] font-black uppercase tracking-widest mb-10 border border-blue-100">
+                    <span class="w-2 h-2 bg-blue-600 rounded-full"></span>
+                    Phiên bản 1.0.1 đã sẵn sàng
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black text-slate-900 mb-8 leading-[1.1] tracking-tight">
+                    Quản lý thiết bị <br>
+                    <span class="text-blue-600">IT chuyên nghiệp</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12">
+                    Giải pháp tối ưu để theo dõi, quản lý và bảo trì toàn bộ tài sản CNTT của công ty bạn. Tăng hiệu suất, giảm thất thoát.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-24">
+                    <a href="/auth/register" class="w-full sm:w-auto px-10 py-4 bg-blue-600 text-white font-bold rounded-2xl shadow-xl shadow-blue-100 hover:bg-blue-700 hover:-translate-y-0.5 transition-all active:scale-95">
+                        Bắt đầu miễn phí ngay
+                    </a>
+                    <a href="#features" class="w-full sm:w-auto px-10 py-4 bg-white text-slate-900 font-bold rounded-2xl border border-slate-200 hover:bg-slate-50 transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="circle-play" class="w-5 h-5 text-blue-600"></i>
+                        Xem tính năng
+                    </a>
+                </div>
+
+                <!-- Logotypes -->
+                <div class="border-t border-slate-100 pt-12 flex flex-col md:flex-row items-center justify-between gap-8 opacity-40 grayscale">
+                    <p class="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Đối tác tin cậy</p>
+                    <div class="flex flex-wrap justify-center gap-8 md:gap-16">
+                        <span class="text-xl font-black tracking-tighter italic">Google</span>
+                        <span class="text-xl font-black tracking-tighter italic">Microsoft</span>
+                        <span class="text-xl font-black tracking-tighter italic">OpenAI</span>
+                        <span class="text-xl font-black tracking-tighter italic">SpaceX</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- BG decorations -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05)_0%,transparent_70%)] -z-10"></div>
+        </section>
+
+        <!-- Features Grid -->
+        <section id="features" class="py-32 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-12 items-end mb-20">
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight">Tính năng cốt lõi giúp bạn tiết kiệm thời gian.</h2>
+                        <p class="text-lg text-slate-500 font-medium">Chúng tôi xây dựng hệ thống xoay quanh nhu cầu thực tế của người quản trị.</p>
+                    </div>
+                    <div class="lg:text-right">
+                        <a href="/auth/register" class="inline-flex items-center gap-2 text-blue-600 font-bold hover:gap-3 transition-all">
+                            Khám phá tất cả tính năng <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-6 transition-transform">
+                            <i data-lucide="database"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Dữ liệu tập trung</h3>
+                        <p class="text-slate-500 leading-relaxed">Toàn bộ hồ sơ thiết bị được lưu trữ an toàn và có thể truy xuất ngay lập tức.</p>
+                    </div>
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-14 h-14 bg-indigo-600 text-white rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-6 transition-transform">
+                            <i data-lucide="users"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Bàn giao nhanh</h3>
+                        <p class="text-slate-500 leading-relaxed">Cấp phát thiết bị cho nhân viên chỉ với vài bước đơn giản và minh bạch.</p>
+                    </div>
+                    <div class="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all group">
+                        <div class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center mb-8 group-hover:rotate-6 transition-transform">
+                            <i data-lucide="shield-check"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4">Bảo mật tuyệt đối</h3>
+                        <p class="text-slate-500 leading-relaxed">Hệ thống phân quyền thông minh giúp bảo vệ dữ liệu tài sản của doanh nghiệp.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-32">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="relative">
+                        <img src="https://i.ibb.co/Gvq6N0Yz/team-hero.jpg" class="rounded-[3rem] shadow-2xl w-full" alt="Team">
+                        <div class="absolute -bottom-6 -right-6 bg-blue-600 text-white p-8 rounded-3xl shadow-2xl max-w-[200px]">
+                            <p class="text-4xl font-black mb-2">99%</p>
+                            <p class="text-xs font-bold opacity-80 uppercase tracking-widest leading-tight">Khách hàng tin tưởng sử dụng</p>
+                        </div>
+                    </div>
+                    <div class="space-y-8">
+                        <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">Sứ mệnh của chúng tôi là <span class="text-blue-600">số hóa</span> mọi tài sản IT.</h2>
+                        <p class="text-lg text-slate-500 leading-relaxed font-medium">Chúng tôi giúp các doanh nghiệp loại bỏ quy trình quản lý thủ công, thay thế bằng hệ thống tự động hóa thông minh và minh bạch.</p>
+                        <div class="grid gap-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center shrink-0">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Giảm thiểu thất thoát tài sản hiệu quả.</span>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-6 h-6 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center shrink-0">
+                                    <i data-lucide="check" class="w-4 h-4"></i>
+                                </div>
+                                <span class="font-bold text-slate-700">Tối ưu hóa vòng đời thiết bị.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="py-32">
+            <div class="max-w-5xl mx-auto px-6 text-center bg-slate-900 rounded-[3rem] p-12 md:p-24 text-white relative overflow-hidden shadow-2xl">
+                <div class="relative z-10 space-y-10">
+                    <h2 class="text-4xl md:text-6xl font-black tracking-tight leading-tight">Sẵn sàng để quản trị <br> chuyên nghiệp?</h2>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="/auth/register" class="w-full sm:w-auto px-10 py-4 bg-white text-slate-900 font-bold rounded-2xl hover:bg-blue-50 transition-all active:scale-95">Tạo tài khoản miễn phí</a>
+                        <a href="/auth/login" class="w-full sm:w-auto px-10 py-4 bg-slate-800 text-white font-bold rounded-2xl hover:bg-slate-700 transition-all border border-slate-700">Đăng nhập ngay</a>
+                    </div>
+                </div>
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600/10 rounded-full blur-[100px]"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white py-20 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">💻</span>
+                <span class="text-xl font-black text-slate-900">IT MANAGER</span>
+            </div>
+            <p class="text-sm text-slate-400 font-bold uppercase tracking-widest">&copy; 2026 vuinguyen16003069</p>
+            <div class="flex gap-6 text-slate-400">
+                <a href="#" class="hover:text-blue-600 transition-colors"><i data-lucide="message-circle"></i></a>
+                <a href="#" class="hover:text-blue-600 transition-colors"><i data-lucide="code-2"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

@@ -15,9 +15,13 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        scriptSrc: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'", 'unpkg.com', 'fonts.googleapis.com'],
+        styleSrcElem: ["'self'", "'unsafe-inline'", 'unpkg.com', 'fonts.googleapis.com'],
+        scriptSrc: ["'self'", "'unsafe-inline'", 'unpkg.com'],
+        scriptSrcElem: ["'self'", "'unsafe-inline'", 'unpkg.com'],
         imgSrc: ["'self'", 'data:', 'i.ibb.co', 'images.unsplash.com'],
+        connectSrc: ["'self'", 'unpkg.com'],
+        fontSrc: ["'self'", 'fonts.gstatic.com'],
         scriptSrcAttr: ["'unsafe-inline'"],
       },
     },

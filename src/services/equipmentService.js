@@ -90,4 +90,21 @@ async function remove(id, userId, userRole) {
   return item.deleteOne();
 }
 
-module.exports = { getAll, getById, create, update, remove };
+async function getStats(userId, userRole) {
+  const filter = {};
+  if (userRole !== 'admin') {
+    filter.owner = userId;
+  }
+
+  const [total, available, inUse, maintenance, retired] = await Promise.all([
+    Equipment.countDocuments(filter),
+    Equipment.countDocuments({ ...filter, status: 'available' }),
+    Equipment.countDocuments({ ...filter, status: 'in-use' }),
+    Equipment.countDocuments({ ...filter, status: 'maintenance' }),
+    Equipment.countDocuments({ ...filter, status: 'retired' }),
+  ]);
+
+  return { total, available, inUse, maintenance, retired };
+}
+
+module.exports = { getAll, getById, create, update, remove, getStats };

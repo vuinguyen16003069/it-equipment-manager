@@ -2,10 +2,11 @@ const authRouter = require('./authRouter');
 const equipmentRouter = require('./equipmentRouter');
 const userRouter = require('./userRouter');
 const apiRouter = require('./apiRouter');
+const homeController = require('../controllers/homeController');
 const { notFound, globalError } = require('../middleware/errorHandler');
 
 function setupRoutes(app) {
-  app.get('/', (_req, res) => res.redirect('/equipment'));
+  app.get('/', homeController.index);
   app.use('/auth', authRouter);
   app.use('/equipment', equipmentRouter);
   app.use('/users', userRouter);
