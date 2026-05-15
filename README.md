@@ -227,6 +227,10 @@ src/
 ├── input.css                     # Tailwind CSS source
 ├── index.js                      # App bootstrap
 ├── .env                          # Environment variables
+├── .env.example                  # Environment variables template
+├── .dockerignore                 # Docker ignore file
+├── Dockerfile                    # Docker configuration
+├── docker-compose.yml            # Docker Compose configuration
 └── biome.json                    # Biome configuration
 ```
 

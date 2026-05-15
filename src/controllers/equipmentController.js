@@ -23,7 +23,11 @@ function isValidId(id) {
 
 async function index(req, res, next) {
   try {
-    const { items, total, page, totalPages, pageSize } = await equipmentService.getAll(req.user.id, req.user.role, req.query);
+    const { items, total, page, totalPages, pageSize } = await equipmentService.getAll(
+      req.user.id,
+      req.user.role,
+      req.query,
+    );
     const flash = FLASH_MESSAGES[req.query.flash] || null;
     res.render('equipment/index', {
       title: 'Danh sách thiết bị',
@@ -155,4 +159,25 @@ async function deleteEquipment(req, res, next) {
   }
 }
 
-module.exports = { index, getCreate, postCreate, getEdit, postEdit, deleteEquipment, upload };
+async function getDetail(req, res, next) {
+  if (!isValidId(req.params.id)) {
+    return res.redirect('/equipment');
+  }
+  try {
+    const item = await equipmentService.getById(req.params.id, req.user.id, req.user.role);
+    if (!item) {
+      return res.redirect('/equipment');
+    }
+    res.render('equipment/detail', {
+      title: 'Chi tiết thiết bị',
+      item,
+      EQUIPMENT_TYPES,
+      EQUIPMENT_STATUSES,
+      request: req,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { index, getCreate, postCreate, getEdit, postEdit, getDetail, deleteEquipment, upload };

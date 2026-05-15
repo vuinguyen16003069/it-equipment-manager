@@ -101,12 +101,13 @@
                     const rowNum = (pagination.page - 1) * pagination.pageSize + i + 1;
                     const dateStr = item.purchaseDate ? new Date(item.purchaseDate).toLocaleDateString('vi-VN') : '—';
                 %>
-                <tr class="hover:bg-blue-50 transition-colors group cursor-pointer">
+                <tr class="hover:bg-blue-50 transition-colors group cursor-pointer" 
+                    onclick="window.location='/equipment/detail/<%= item._id %>'">
                     <td class="px-4 py-3.5 text-gray-400 font-medium"><%= rowNum %></td>
                     <td class="px-4 py-3.5">
                         <div class="w-12 h-12 bg-gray-100 rounded-lg border border-gray-200 overflow-hidden flex items-center justify-center">
                             <% if (item.imageUrl) { %>
-                                <img src="<%= item.imageUrl %>" class="w-full h-full object-cover cursor-pointer hover:scale-110 transition-transform" onclick="window.open(this.src)">
+                                <img src="<%= item.imageUrl %>" class="w-full h-full object-cover cursor-pointer hover:scale-110 transition-transform" onclick="event.stopPropagation(); window.open(this.src)">
                             <% } else { %>
                                 <span class="text-gray-300 text-[10px]">No img</span>
                             <% } %>
@@ -127,13 +128,14 @@
                     <% if (locals.user && locals.user.role === 'admin') { %>
                     <td class="px-4 py-3.5">
                         <div class="flex items-center justify-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <a href="/equipment/edit/<%= item._id %>"
+                            <a href="/equipment/edit/<%= item._id %>" onclick="event.stopPropagation()"
                                class="bg-amber-50 hover:bg-amber-500 text-amber-700 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm">
                                 &#9999; Sửa
                             </a>
                             <form action="/equipment/delete/<%= item._id %>" method="POST"
                                   data-msg="Xóa thiết bị: <%= item.name %>?"
                                   onsubmit="return confirm(this.dataset.msg)"
+                                  onclick="event.stopPropagation()"
                                   class="inline">
                                 <button type="submit"
                                     class="bg-red-50 hover:bg-red-500 text-red-700 hover:text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-all shadow-sm">
@@ -150,6 +152,8 @@
     </div>
     <% } %>
 </div>
+
+<!-- Detail Modal moved to footer.ejs -->
 
 <!-- Pagination -->
 <% if (pagination.totalPages > 1) { %>
@@ -175,7 +179,6 @@
     </div>
 </div>
 <% } %>
-
 <script>
     function exportToCSV() {
         const headers = ['#', 'Tên', 'Loại', 'Serial', 'Trạng thái', 'Người dùng', 'Ngày mua'];
@@ -184,12 +187,12 @@
             const cells = tr.querySelectorAll('td');
             rows.push([
                 idx + 1,
-                cells[1].textContent.trim(),
                 cells[2].textContent.trim(),
                 cells[3].textContent.trim(),
                 cells[4].textContent.trim(),
                 cells[5].textContent.trim(),
-                cells[6].textContent.trim()
+                cells[6].textContent.trim(),
+                cells[7].textContent.trim()
             ]);
         });
         const csv = [headers, ...rows].map(r => r.map(c => `"${c}"`).join(',')).join('\n');

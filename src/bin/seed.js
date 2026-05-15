@@ -133,12 +133,12 @@ async function seed() {
     let user = await User.findOne({ username: u.username });
     if (!user) {
       const hashed = await bcrypt.hash(u.password, 10);
-      user = await User.create({ 
-        username: u.username, 
+      user = await User.create({
+        username: u.username,
         email: u.email,
-        password: hashed, 
+        password: hashed,
         role: u.role,
-        isVerified: true 
+        isVerified: true,
       });
       console.log(`✅ Đã tạo tài khoản [${u.role}]  →  ${u.username} / ${u.password}`);
     }

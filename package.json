@@ -10,16 +10,7 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
   },
-  "keywords": [
-    "it",
-    "inventory",
-    "management",
-    "express",
-    "nodejs",
-    "ejs",
-    "tailwindcss",
-    "jwt"
-  ],
+  "keywords": ["it", "inventory", "management", "express", "nodejs", "ejs", "tailwindcss", "jwt"],
   "scripts": {
     "start": "node src/bin/www.js",
     "dev": "nodemon -w src -w .env src/bin/www.js",

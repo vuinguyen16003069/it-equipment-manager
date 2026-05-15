@@ -20,7 +20,7 @@ server.listen(PORT, () => {
     gradient: ['blue', 'cyan'],
     independentGradient: false,
     transitionGradient: false,
-    env: 'node'
+    env: 'node',
   });
 
   console.log('\x1b[36m%s\x1b[0m', `🚀 Server is flying at: http://localhost:${PORT}`);

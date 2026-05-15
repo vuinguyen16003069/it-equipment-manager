@@ -6,6 +6,13 @@ const {
   resetPasswordSchema,
 } = require('../helpers/validation');
 const authService = require('../services/authService');
+const multer = require('multer');
+const imgbb = require('../helpers/imgbb');
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
+});
 
 function getLogin(req, res) {
   if (req.cookies.token) {
@@ -210,6 +217,46 @@ async function postChangePassword(req, res) {
   }
 }
 
+async function postUpdateAvatar(req, res) {
+  try {
+    if (!req.file) {
+      throw new Error('Vui lòng chọn ảnh.');
+    }
+    const imageUrl = await imgbb.upload(req.file.buffer, req.file.originalname);
+    const updatedUser = await authService.updateAvatar(req.user.id, imageUrl);
+
+    // Cập nhật token trong cookie để Header hiển thị ảnh mới
+    const jwt = require('jsonwebtoken');
+    const token = jwt.sign(
+      { id: updatedUser._id, username: updatedUser.username, role: updatedUser.role, avatar: updatedUser.avatar },
+      process.env.JWT_SECRET,
+      { expiresIn: '8h' },
+    );
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 8 * 60 * 60 * 1000,
+    });
+
+    res.render('profile', {
+      title: 'Hồ sơ cá nhân',
+      profile: updatedUser,
+      error: null,
+      success: 'Đã cập nhật ảnh đại diện.',
+      request: req,
+    });
+  } catch (err) {
+    const user = await authService.getUserById(req.user.id);
+    res.render('profile', {
+      title: 'Hồ sơ cá nhân',
+      profile: user,
+      error: err.message,
+      success: null,
+      request: req,
+    });
+  }
+}
+
 function getSettings(req, res) {
   res.render('settings', {
     title: 'Cài đặt',
@@ -232,4 +279,6 @@ module.exports = {
   postForgotPassword,
   getResetPassword,
   postResetPassword,
+  postUpdateAvatar,
+  upload,
 };

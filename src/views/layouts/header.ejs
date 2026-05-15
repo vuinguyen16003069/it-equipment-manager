@@ -47,6 +47,13 @@
                     <div class="relative" id="userMenuContainer">
                         <button type="button" id="userMenuBtn"
                             class="flex items-center gap-2 px-3 py-2 hover:bg-gray-100 rounded-lg transition-all cursor-pointer active:scale-95">
+                            <% if (locals.user.avatar) { %>
+                                <img src="<%= locals.user.avatar %>" alt="Avatar" class="w-8 h-8 rounded-full object-cover border-2 border-gray-100 shadow-sm">
+                            <% } else { %>
+                                <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold uppercase border-2 border-white shadow-sm">
+                                    <%= locals.user.username.charAt(0) %>
+                                </div>
+                            <% } %>
                             <span class="text-sm font-medium text-gray-700"><%= locals.user.username %></span>
                             <span class="text-xs">&#9662;</span>
                         </button>

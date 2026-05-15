@@ -21,6 +21,7 @@ router.post('/logout', authController.logout);
 
 // Profile & Settings (require authentication)
 router.get('/profile', requireAuth, authController.getProfile);
+router.post('/profile/avatar', requireAuth, authController.upload.single('avatar'), authController.postUpdateAvatar);
 router.post('/profile/change-password', requireAuth, authController.postChangePassword);
 router.get('/settings', requireAuth, authController.getSettings);
 

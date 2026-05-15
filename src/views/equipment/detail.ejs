@@ -1,0 +1,109 @@
+<%- include('../layouts/header') %>
+
+<div class="max-w-3xl">
+    <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">&#128203; Chi tiết thiết bị</h2>
+        
+        <div class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Ảnh thiết bị -->
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Ảnh thiết bị</label>
+                    <div class="flex items-center gap-4">
+                        <div class="w-24 h-24 bg-gray-100 rounded-lg border-2 border-gray-300 flex items-center justify-center overflow-hidden">
+                            <% if (item.imageUrl) { %>
+                                <img src="<%= item.imageUrl %>" class="w-full h-full object-cover">
+                            <% } else { %>
+                                <span class="text-gray-400 text-xs text-center px-1">Chưa có ảnh</span>
+                            <% } %>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-xs text-gray-500">Hồ sơ được tạo lúc: <%= new Date(item.createdAt).toLocaleString('vi-VN') %></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tên thiết bị -->
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Tên thiết bị <span class="text-red-500">*</span></label>
+                    <div class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-800">
+                        <%= item.name %>
+                    </div>
+                </div>
+
+                <!-- Loại thiết bị -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Loại thiết bị <span class="text-red-500">*</span></label>
+                    <div class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-800">
+                        <%= item.type %>
+                    </div>
+                </div>
+
+                <!-- Số Serial -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Số Serial <span class="text-red-500">*</span></label>
+                    <div class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-800 font-mono">
+                        <%= item.serialNumber %>
+                    </div>
+                </div>
+
+                <!-- Trạng thái -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Trạng thái <span class="text-red-500">*</span></label>
+                    <% 
+                        const statusMap = {
+                            'available':   'Có sẵn',
+                            'in-use':      'Đang sử dụng',
+                            'maintenance': 'Bảo trì',
+                            'retired':     'Đã thanh lý',
+                        };
+                    %>
+                    <div class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-800">
+                        <%= statusMap[item.status] || item.status %>
+                    </div>
+                </div>
+
+                <!-- Người sử dụng -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Người sử dụng</label>
+                    <div class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-800">
+                        <%= item.assignedTo || '' %>
+                    </div>
+                </div>
+
+                <!-- Ngày mua -->
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Ngày mua</label>
+                    <div class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-800">
+                        <%= item.purchaseDate ? new Date(item.purchaseDate).toLocaleDateString('vi-VN') : '' %>
+                    </div>
+                </div>
+
+                <!-- Mô tả -->
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-bold text-gray-700 mb-2">Mô tả</label>
+                    <div class="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-800 min-h-[100px] whitespace-pre-wrap">
+                        <%= item.description || '' %>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-4 border-t border-gray-200">
+                <% if (locals.user && locals.user.role === 'admin') { %>
+                <a href="/equipment/edit/<%= item._id %>"
+                    class="bg-amber-50 hover:bg-amber-500 text-amber-700 hover:text-white font-bold px-6 py-3 rounded-lg transition-all shadow-sm active:scale-95 flex items-center gap-2">
+                    <span class="text-lg">&#9999;</span>
+                    Sửa
+                </a>
+                <% } %>
+                <a href="/equipment"
+                   class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold px-6 py-3 rounded-lg transition-all active:scale-95 flex items-center gap-2">
+                    <span class="text-lg">&#10005;</span>
+                    Hủy
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

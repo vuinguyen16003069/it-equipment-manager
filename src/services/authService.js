@@ -69,9 +69,13 @@ async function login(username, password) {
     throw new Error('Tài khoản chưa được xác thực. Vui lòng kiểm tra email.');
   }
 
-  const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: '8h',
-  });
+  const token = jwt.sign(
+    { id: user._id, username: user.username, role: user.role, avatar: user.avatar },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: '8h',
+    },
+  );
   return token;
 }
 
@@ -123,4 +127,23 @@ async function resetPassword(email, otp, newPassword) {
   return true;
 }
 
-module.exports = { register, login, getUserById, changePassword, verifyOtp, forgotPassword, resetPassword };
+async function updateAvatar(userId, avatarUrl) {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error('Người dùng không tồn tại');
+  }
+  user.avatar = avatarUrl;
+  await user.save();
+  return user;
+}
+
+module.exports = {
+  register,
+  login,
+  getUserById,
+  changePassword,
+  verifyOtp,
+  forgotPassword,
+  resetPassword,
+  updateAvatar,
+};
